@@ -17,7 +17,7 @@ $filteredProducts = [];
 
 foreach ($products as $product) {
     if ($keyword === '' || stripos($product['name'], $keyword) !== false) {
-        $filteredProducts[] = $product;
+        $filteredProducts[] = $product; 
     }
 }
 // TODO 1: Đọc keyword từ query string bằng $_GET['keyword'] ?? ''.
@@ -46,7 +46,8 @@ foreach ($products as $product) {
         <p class="page-subtitle">Dữ liệu hiện đang nằm trong PHP array. Database sẽ xuất hiện ở các buổi sau.</p>
         <section class="search-box">
             <form class="search-form" method="GET" action="products.php">
-                <input class="form-control" type="text" name="keyword" placeholder="Tìm sản phẩm...">
+                <input class="form-control" type="text" name="keyword" placeholder="Tìm sản phẩm..."
+                    value="<?= htmlspecialchars($keyword, ENT_QUOTES, 'UTF-8') ?>">
                 <button class="btn" type="submit">Tìm kiếm</button>
             </form>
             <p class="search-note">Ví dụ: <strong>vku</strong>, <strong>áo</strong>, <strong>balo</strong>.</p>
@@ -61,7 +62,7 @@ foreach ($products as $product) {
 
                 <div class="product-body">
                     <h2 class="product-name">
-                        <?= $p['name'] ?>
+                        <?= htmlspecialchars($p['name'], ENT_QUOTES, 'UTF-8') ?>
                     </h2>
 
                     <p class="product-price">
