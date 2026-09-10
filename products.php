@@ -12,12 +12,23 @@ $products = [
 ];
  
 $keyword = trim($_GET['keyword'] ?? '');
+$minPrice = $_GET['min_price'] ?? '';
+$maxPrice = $_GET['max_price'] ?? '';
 
 $filteredProducts = [];
 
 foreach ($products as $product) {
-    if ($keyword === '' || stripos($product['name'], $keyword) !== false) {
-        $filteredProducts[] = $product; 
+    $matchKeyword = $keyword === '' ||
+        mb_stripos($product['name'], $keyword) !== false;
+
+    $matchMinPrice = $minPrice === '' ||
+        $product['price'] >= $minPrice;
+
+    $matchMaxPrice = $maxPrice === '' ||
+        $product['price'] <= $maxPrice;
+
+    if ($matchKeyword && $matchMinPrice && $matchMaxPrice) {
+        $filteredProducts[] = $product;
     }
 }
 // TODO 1: Đọc keyword từ query string bằng $_GET['keyword'] ?? ''.
@@ -48,6 +59,11 @@ foreach ($products as $product) {
             <form class="search-form" method="GET" action="products.php">
                 <input class="form-control" type="text" name="keyword" placeholder="Tìm sản phẩm..."
                     value="<?= htmlspecialchars($keyword, ENT_QUOTES, 'UTF-8') ?>">
+                <input class="form-control" type="number" name="min_price" placeholder="Giá từ..."
+                    value="<?= htmlspecialchars($minPrice, ENT_QUOTES, 'UTF-8') ?>">
+
+                <input class="form-control" type="number" name="max_price" placeholder="Giá đến..."
+                    value="<?= htmlspecialchars($maxPrice, ENT_QUOTES, 'UTF-8') ?>">
                 <button class="btn" type="submit">Tìm kiếm</button>
             </form>
             <p class="search-note">Ví dụ: <strong>vku</strong>, <strong>áo</strong>, <strong>balo</strong>.</p>
