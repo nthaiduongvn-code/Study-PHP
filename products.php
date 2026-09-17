@@ -1,40 +1,42 @@
-<?php
-
-$products = [
-    ['name' => 'Áo thun VKU', 'price' => 150000, 'stock' => 20, 'icon' => '👕'],
-    ['name' => 'Bình nước VKU', 'price' => 120000, 'stock' => 0, 'icon' => '🥤'],
-    ['name' => 'Balo VKU', 'price' => 350000, 'stock' => 8, 'icon' => '🎒'],
-    ['name' => 'Sổ tay VKU', 'price' => 50000, 'stock' => 35, 'icon' => '📒'],
-    ['name' => 'Mũ lưỡi trai VKU', 'price' => 110000, 'stock' => 12, 'icon' => '🧢'],
-    ['name' => 'Áo khoác VKU', 'price' => 420000, 'stock' => 5, 'icon' => '🧥'],
-    ['name' => 'Túi tote VKU', 'price' => 90000, 'stock' => 18, 'icon' => '👜'],
-    ['name' => 'Bộ quà tặng VKU', 'price' => 300000, 'stock' => 6, 'icon' => '🎁'],
-];
+<?php 
+include "Products_DAO"; 
  
-$keyword = trim($_GET['keyword'] ?? '');
-$minPrice = $_GET['min_price'] ?? '';
-$maxPrice = $_GET['max_price'] ?? '';
-
-$filteredProducts = [];
-
-foreach ($products as $product) {
-    $matchKeyword = $keyword === '' ||
-        mb_stripos($product['name'], $keyword) !== false;
-
-    $matchMinPrice = $minPrice === '' ||
-        $product['price'] >= $minPrice;
-
-    $matchMaxPrice = $maxPrice === '' ||
-        $product['price'] <= $maxPrice;
-
-    if ($matchKeyword && $matchMinPrice && $matchMaxPrice) {
-        $filteredProducts[] = $product;
-    }
-}
-// TODO 1: Đọc keyword từ query string bằng $_GET['keyword'] ?? ''.
-// TODO 2: Tạo $filteredProducts và lọc theo keyword.
-// CHALLENGE: Thêm lọc theo min_price và max_price.
+// $products = [ 
+//     ['name' => 'Áo thun VKU', 'price' => 150000, 'stock' => 20, 'icon' => '👕'], 
+//     ['name' => 'Bình nước VKU', 'price' => 120000, 'stock' => 0, 'icon' => '🥤'], 
+//     ['name' => 'Balo VKU', 'price' => 350000, 'stock' => 8, 'icon' => '🎒'], 
+//     ['name' => 'Sổ tay VKU', 'price' => 50000, 'stock' => 35, 'icon' => '📒'], 
+//     ['name' => 'Mũ lưỡi trai VKU', 'price' => 110000, 'stock' => 12, 'icon' => '🧢'], 
+//     ['name' => 'Áo khoác VKU', 'price' => 420000, 'stock' => 5, 'icon' => '🧥'], 
+//     ['name' => 'Túi tote VKU', 'price' => 90000, 'stock' => 18, 'icon' => '👜'], 
+//     ['name' => 'Bộ quà tặng VKU', 'price' => 300000, 'stock' => 6, 'icon' => '🎁'], 
+// ]; 
+ 
+$keyword = trim($_GET['keyword'] ?? ''); 
+$minPrice = $_GET['min_price'] ?? ''; 
+$maxPrice = $_GET['max_price'] ?? ''; 
+ 
+$filteredProducts = []; 
+ 
+foreach (products_VKU() as $product) { 
+    $matchKeyword = $keyword === '' || 
+        mb_stripos($product['name'], $keyword) !== false; 
+ 
+    $matchMinPrice = $minPrice === '' || 
+        $product['price'] >= $minPrice; 
+ 
+    $matchMaxPrice = $maxPrice === '' || 
+        $product['price'] <= $maxPrice; 
+ 
+    if ($matchKeyword && $matchMinPrice && $matchMaxPrice) { 
+        $filteredProducts[] = $product; 
+    } 
+} 
+// TODO 1: Đọc keyword từ query string bằng $_GET['keyword'] ?? ''. 
+// TODO 2: Tạo $filteredProducts và lọc theo keyword. 
+// CHALLENGE: Thêm lọc theo min_price và max_price. 
 ?>
+
 <!doctype html>
 <html lang="vi">
 
@@ -70,7 +72,7 @@ foreach ($products as $product) {
         </section>
 
         <section class="product-grid">
-            <?php foreach ($filteredProducts as $p): ?>
+            <?php foreach ( $filteredProducts as $p): ?>
             <article class="product-card">
                 <div class="product-thumb">
                     <?= htmlspecialchars($p['icon'], ENT_QUOTES, 'UTF-8') ?>
@@ -111,22 +113,22 @@ foreach ($products as $product) {
 
 
             <!-- TODO 3: Dựa vào card HTML mẫu phía trên, dùng foreach để render toàn bộ $products. -->
-            <!-- TODO 4:
-             Thay giá hard-code bằng dữ liệu PHP
-             và dùng number_format().
+            <!-- TODO 4: 
+             Thay giá hard-code bằng dữ liệu PHP 
+             và dùng number_format(). 
         -->
 
-            <!-- TODO 5:
-             stock > 0 => Còn hàng
-             ngược lại => Hết hàng.
+            <!-- TODO 5: 
+             stock > 0 => Còn hàng 
+             ngược lại => Hết hàng. 
         -->
 
-            <!-- TODO 6:
-             price >= 300000 => thêm badge Cao cấp.
+            <!-- TODO 6: 
+             price >= 300000 => thêm badge Cao cấp. 
         -->
 
-            <!-- TODO 7:
-             Dùng htmlspecialchars() khi output dữ liệu phù hợp.
+            <!-- TODO 7: 
+             Dùng htmlspecialchars() khi output dữ liệu phù hợp. 
         -->
         </section>
     </main>
