@@ -73,7 +73,8 @@ foreach ($products as $product) {
             <?php foreach ($filteredProducts as $p): ?>
             <article class="product-card">
                 <div class="product-thumb">
-                    🎒
+                    <?= htmlspecialchars($p['icon'], ENT_QUOTES, 'UTF-8') ?>
+
                 </div>
 
                 <div class="product-body">
@@ -83,7 +84,7 @@ foreach ($products as $product) {
 
                     <p class="product-price">
                         <?= number_format($p['price']) ?>
-                        <?php if ($p ['stock'] > 0): ?>
+                        <?php if ($p ['price'] >= 300000): ?>
                         <span style=" color: green;"> ● Cao cấp</span>
                         <?php else: ?>
                         <span></span>
